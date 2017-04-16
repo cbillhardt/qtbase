@@ -2,7 +2,7 @@
  * jmorecfg.h
  *
  * Copyright (C) 1991-1997, Thomas G. Lane.
- * Modified 1997-2009 by Guido Vollbeding.
+ * Modified 1997-2011 by Guido Vollbeding.
  * This file is part of the Independent JPEG Group's software.
  * For conditions of distribution and use, see the accompanying README file.
  *
@@ -162,9 +162,7 @@ typedef short INT16;
 #ifndef _BASETSD_H_		/* Microsoft defines it in basetsd.h */
 #ifndef _BASETSD_H		/* MinGW is slightly different */
 #ifndef QGLOBAL_H		/* Qt defines it in qglobal.h */
-#ifndef VXWORKS
 typedef long INT32;
-#endif
 #endif
 #endif
 #endif
@@ -188,10 +186,6 @@ typedef unsigned int JDIMENSION;
  * Another application is to make all functions global for use with debuggers
  * or code profilers that require it.
  */
-
-#if defined(VXWORKS) && defined(LOCAL)
-#undef LOCAL
-#endif
 
 /* a function called through method pointers: */
 #define METHODDEF(type)		static type
@@ -318,9 +312,7 @@ typedef int boolean;
  * the offsets will also change the order in which colormap data is organized.
  * RESTRICTIONS:
  * 1. The sample applications cjpeg,djpeg do NOT support modified RGB formats.
- * 2. These macros only affect RGB<=>YCbCr color conversion, so they are not
- *    useful if you are using JPEG color spaces other than YCbCr or grayscale.
- * 3. The color quantizer modules will not behave desirably if RGB_PIXELSIZE
+ * 2. The color quantizer modules will not behave desirably if RGB_PIXELSIZE
  *    is not 3 (they don't understand about dummy color components!).  So you
  *    can't use color quantization if you change that value.
  */
