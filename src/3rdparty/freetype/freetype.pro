@@ -60,7 +60,7 @@ win32 {
     INCLUDEPATH += $$PWD/builds/unix
 }
 
-INCLUDEPATH += $$PWD/include
+INCLUDEPATH += $$PWD/include $$PWD/include/freetype/config
 
 DEFINES += FT2_BUILD_LIBRARY
 contains(QT_CONFIG, system-zlib) {

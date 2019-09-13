@@ -215,10 +215,10 @@ int q_ASN1_STRING_length(ASN1_STRING *a);
 int q_ASN1_STRING_to_UTF8(unsigned char **a, ASN1_STRING *b);
 long q_BIO_ctrl(BIO *a, int b, long c, void *d);
 int q_BIO_free(BIO *a);
-BIO *q_BIO_new(BIO_METHOD *a);
+BIO *q_BIO_new(const BIO_METHOD *a);
 BIO *q_BIO_new_mem_buf(void *a, int b);
 int q_BIO_read(BIO *a, void *b, int c);
-BIO_METHOD *q_BIO_s_mem();
+const BIO_METHOD *q_BIO_s_mem();
 int q_BIO_write(BIO *a, const void *b, int c);
 int q_BN_num_bits(const BIGNUM *a);
 #ifndef OPENSSL_NO_EC
@@ -228,7 +228,7 @@ int q_EC_GROUP_get_degree(const EC_GROUP* g);
 int q_CRYPTO_num_locks();
 void q_CRYPTO_set_locking_callback(void (*a)(int, int, const char *, int));
 void q_CRYPTO_set_id_callback(unsigned long (*a)());
-void q_CRYPTO_free(void *a);
+void q_OPENSSL_free(void *a);
 DSA *q_DSA_new();
 void q_DSA_free(DSA *a);
 X509 *q_d2i_X509(X509 **a, const unsigned char **b, long c);
@@ -485,7 +485,7 @@ DSA *q_d2i_DSAPrivateKey(DSA **a, unsigned char **pp, long length);
         PEM_ASN1_write_bio((int (*)(void*, unsigned char**))q_i2d_DSAPrivateKey,PEM_STRING_DSA,\
                            bp,(char *)x,enc,kstr,klen,cb,u)
 #endif
-#define q_SSL_CTX_set_options(ctx,op) q_SSL_CTX_ctrl((ctx),SSL_CTRL_OPTIONS,(op),NULL)
+#define q_SSL_CTX_set_options(ctx,op) SSL_CTX_set_options(ctx, op)
 #define q_SSL_CTX_set_mode(ctx,op) q_SSL_CTX_ctrl((ctx),SSL_CTRL_MODE,(op),NULL)
 #define q_SKM_sk_num(type, st) ((int (*)(const STACK_OF(type) *))q_sk_num)(st)
 #define q_SKM_sk_value(type, st,i) ((type * (*)(const STACK_OF(type) *, int))q_sk_value)(st, i)

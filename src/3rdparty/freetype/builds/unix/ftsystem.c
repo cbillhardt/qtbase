@@ -16,6 +16,7 @@
 /***************************************************************************/
 
 
+#include <fcntl.h>
 #include <ft2build.h>
   /* we use our special ftconfig.h file, not the standard one */
 #include <ftconfig.h>

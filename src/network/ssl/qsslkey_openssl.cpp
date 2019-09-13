@@ -1,4 +1,4 @@
-/****************************************************************************
+/**************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
 ** Contact: http://www.qt.io/licensing/
@@ -78,28 +78,28 @@ void QSslKeyPrivate::clear(bool deep)
 
 bool QSslKeyPrivate::fromEVP_PKEY(EVP_PKEY *pkey)
 {
-    if (pkey->type == EVP_PKEY_RSA) {
+    if (EVP_PKEY_base_id(pkey) == EVP_PKEY_RSA) {
         isNull = false;
         algorithm = QSsl::Rsa;
         type = QSsl::PrivateKey;
 
         rsa = q_RSA_new();
-        memcpy(rsa, q_EVP_PKEY_get1_RSA(pkey), sizeof(RSA));
+        memcpy(rsa, q_EVP_PKEY_get1_RSA(pkey), RSA_size(rsa));
 
         return true;
     }
-    else if (pkey->type == EVP_PKEY_DSA) {
+    else if (EVP_PKEY_base_id(pkey) == EVP_PKEY_DSA) {
         isNull = false;
         algorithm = QSsl::Dsa;
         type = QSsl::PrivateKey;
 
         dsa = q_DSA_new();
-        memcpy(dsa, q_EVP_PKEY_get1_DSA(pkey), sizeof(DSA));
+        memcpy(dsa, q_EVP_PKEY_get1_DSA(pkey), DSA_size(dsa));
 
         return true;
     }
 #ifndef OPENSSL_NO_EC
-    else if (pkey->type == EVP_PKEY_EC) {
+    else if (EVP_PKEY_base_id(pkey) == EVP_PKEY_EC) {
         isNull = false;
         algorithm = QSsl::Ec;
         type = QSsl::PrivateKey;
@@ -172,8 +172,8 @@ int QSslKeyPrivate::length() const
         return -1;
 
     switch (algorithm) {
-        case QSsl::Rsa: return q_BN_num_bits(rsa->n);
-        case QSsl::Dsa: return q_BN_num_bits(dsa->p);
+        case QSsl::Rsa: return q_BN_num_bits(RSA_get0_n(rsa));
+        case QSsl::Dsa: return q_BN_num_bits(DSA_get0_p(dsa));
 #ifndef OPENSSL_NO_EC
         case QSsl::Ec: return q_EC_GROUP_get_degree(q_EC_KEY_get0_group(ec));
 #endif

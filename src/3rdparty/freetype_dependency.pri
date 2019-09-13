@@ -1,5 +1,5 @@
 contains(QT_CONFIG, freetype) {
-    INCLUDEPATH += $$PWD/freetype/include
+    INCLUDEPATH += $$PWD/freetype/include $$PWD/freetype/include/freetype/config
     LIBS_PRIVATE += -L$$QT_BUILD_TREE/lib -lqtfreetype$$qtPlatformTargetSuffix()
 } else:contains(QT_CONFIG, system-freetype) {
     # pull in the proper freetype2 include directory

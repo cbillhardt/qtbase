@@ -77,7 +77,7 @@ android:!android-no-sdk: SOURCES += ssl/qsslsocket_openssl_android.cpp
         LIBS_PRIVATE += $$OPENSSL_LIBS_RELEASE
     }
 
-    QMAKE_CXXFLAGS += $$OPENSSL_CFLAGS
+    QMAKE_CXXFLAGS += $$OPENSSL_CFLAGS -DOPENSSL_NO_SSL2
     LIBS_PRIVATE += $$OPENSSL_LIBS
     win32: LIBS_PRIVATE += -lcrypt32
 }

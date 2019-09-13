@@ -324,7 +324,7 @@ init_context:
 #ifndef OPENSSL_NO_EC
 #if OPENSSL_VERSION_NUMBER >= 0x10002000L
     if (q_SSLeay() >= 0x10002000L) {
-        q_SSL_CTX_ctrl(sslContext->ctx, SSL_CTRL_SET_ECDH_AUTO, 1, NULL);
+        q_SSL_CTX_ctrl(sslContext->ctx, SSL_CTRL_SET_TMP_ECDH, 1, NULL);
     } else
 #endif
     {
@@ -468,7 +468,7 @@ bool QSslContext::cacheSession(SSL* ssl)
             unsigned char *data = reinterpret_cast<unsigned char *>(m_sessionASN1.data());
             if (!q_i2d_SSL_SESSION(session, &data))
                 qCWarning(lcSsl, "could not store persistent version of SSL session");
-            m_sessionTicketLifeTimeHint = session->tlsext_tick_lifetime_hint;
+            m_sessionTicketLifeTimeHint = SSL_SESSION_get_ticket_lifetime_hint(session);
         }
     }
 
